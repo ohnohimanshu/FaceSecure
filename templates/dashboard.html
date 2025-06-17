@@ -1,91 +1,309 @@
 {% extends 'base.html' %}
+
+{% block title %}Dashboard | FaceSecure{% endblock %}
+
+{% block header_title %}Welcome back, {{ user.username }}!{% endblock %}
+
+{% block header_subtitle %}Monitor your security system and manage access control{% endblock %}
+
 {% block content %}
-<div class="row mt-4">
-    <div class="col-md-12 text-center">
-        <h2 class="fw-bold">Welcome, {{ user.username }}!</h2>
-        <p class="lead">Manage your cameras, faces, and start real-time detection below.</p>
-    </div>
-</div>
-
-<div class="row justify-content-center mt-4">
-    <div class="col-md-3 mb-3">
-        <div class="card text-center shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">Cameras</h5>
-                <p class="display-6">{{ cameras|length }}</p>
-                <a href="/api/cameras/" class="btn btn-outline-primary btn-sm">Manage Cameras</a>
+<!-- Quick Stats -->
+<div class="row g-4 mb-4">
+    <div class="col-md-3">
+        <div class="saas-card p-4">
+            <div class="d-flex align-items-center">
+                <div class="feature-icon me-3">
+                    <i class="fas fa-video"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1">Active Cameras</h6>
+                    <h3 class="mb-0">{{ cameras|length }}</h3>
+                </div>
+            </div>
+            <div class="mt-3">
+                <span class="badge bg-success">All Online</span>
             </div>
         </div>
     </div>
-    <div class="col-md-3 mb-3">
-        <div class="card text-center shadow-sm">
-            <div class="card-body">
-                <h5 class="card-title">Known Faces</h5>
-                <p class="display-6">{{ faces|length }}</p>
-                <a href="/faces/add/" class="btn btn-outline-primary btn-sm">Add Face</a>
+    <div class="col-md-3">
+        <div class="saas-card p-4">
+            <div class="d-flex align-items-center">
+                <div class="feature-icon me-3">
+                    <i class="fas fa-user-check"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1">Known Faces</h6>
+                    <h3 class="mb-0">{{ faces|length }}</h3>
+                </div>
+            </div>
+            <div class="mt-3">
+                <span class="badge bg-primary">Authorized</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="saas-card p-4">
+            <div class="d-flex align-items-center">
+                <div class="feature-icon me-3">
+                    <i class="fas fa-shield-alt"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1">Security Score</h6>
+                    <h3 class="mb-0">98%</h3>
+                </div>
+            </div>
+            <div class="mt-3">
+                <span class="badge bg-success">Excellent</span>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3">
+        <div class="saas-card p-4">
+            <div class="d-flex align-items-center">
+                <div class="feature-icon me-3">
+                    <i class="fas fa-clock"></i>
+                </div>
+                <div>
+                    <h6 class="text-muted mb-1">Uptime</h6>
+                    <h3 class="mb-0">99.9%</h3>
+                </div>
+            </div>
+            <div class="mt-3">
+                <span class="badge bg-success">Last 30 Days</span>
             </div>
         </div>
     </div>
 </div>
 
-<div class="row justify-content-center mt-4">
-    <div class="col-md-6">
-        <div class="card shadow-sm">
-            <div class="card-body text-center">
-                <h4 class="card-title mb-4">Start Face Detection</h4>
-                <form method="post" action="/api/detection/start_detection/">
-                    {% csrf_token %}
-                    <button type="submit" class="btn btn-lg btn-primary">
-                        <i class="fas fa-play me-2"></i>Start Detection
-                    </button>
-                </form>
-                <p class="text-muted mt-3">
-                    This will start face detection on all your active cameras.
-                </p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<div class="row justify-content-center mt-4">
+<!-- Main Content -->
+<div class="row g-4">
+    <!-- Left Column -->
     <div class="col-md-8">
-        <div class="card shadow-sm">
-            <div class="card-body">
-                <h4 class="card-title mb-4">Recent Detections</h4>
-                <div class="table-responsive">
-                    <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Time</th>
-                                <th>Camera</th>
-                                <th>Face</th>
-                                <th>Confidence</th>
-                                <th>Status</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            {% for detection in recent_detections %}
-                            <tr>
-                                <td>{{ detection.timestamp }}</td>
-                                <td>{{ detection.camera.name }}</td>
-                                <td>{{ detection.detected_face.name|default:"Unknown" }}</td>
-                                <td>{{ detection.confidence_score|floatformat:2 }}</td>
-                                <td>
-                                    <span class="badge {% if detection.status == 'completed' %}bg-success{% else %}bg-warning{% endif %}">
-                                        {{ detection.status }}
-                                    </span>
-                                </td>
-                            </tr>
-                            {% empty %}
-                            <tr>
-                                <td colspan="5" class="text-center">No detections yet</td>
-                            </tr>
-                            {% endfor %}
-                        </tbody>
-                    </table>
+        <!-- Live Monitoring -->
+        <div class="saas-card p-4 mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0">Live Monitoring</h5>
+                <div class="btn-group">
+                    <button type="button" class="btn btn-outline-primary active">All Cameras</button>
+                    <button type="button" class="btn btn-outline-primary">Main Entrance</button>
+                    <button type="button" class="btn btn-outline-primary">Parking</button>
+                </div>
+            </div>
+            <div class="row g-3">
+                {% for camera in cameras %}
+                <div class="col-md-6">
+                    <div class="position-relative">
+                        <img src="{{ camera.stream_url }}" class="img-fluid rounded" alt="Camera Feed">
+                        <div class="position-absolute top-0 end-0 m-2">
+                            <span class="badge bg-success">Live</span>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>
+        </div>
+
+        <!-- Recent Activity -->
+        <div class="saas-card p-4">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="mb-0">Recent Activity</h5>
+                <a href="/logs" class="btn btn-link">View All</a>
+            </div>
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>Time</th>
+                            <th>Camera</th>
+                            <th>Face</th>
+                            <th>Confidence</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for detection in recent_detections %}
+                        <tr>
+                            <td>{{ detection.timestamp }}</td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <i class="fas fa-video text-muted me-2"></i>
+                                    {{ detection.camera.name }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="d-flex align-items-center">
+                                    <img src="{{ detection.detected_face.image_url }}" class="rounded-circle me-2" width="24" height="24" alt="Face">
+                                    {{ detection.detected_face.name|default:"Unknown" }}
+                                </div>
+                            </td>
+                            <td>
+                                <div class="progress" style="width: 100px;">
+                                    <div class="progress-bar bg-success" role="progressbar" 
+                                         style="width: {{ detection.confidence_score|floatformat:0 }}%">
+                                        {{ detection.confidence_score|floatformat:1 }}%
+                                    </div>
+                                </div>
+                            </td>
+                            <td>
+                                <span class="badge {% if detection.status == 'completed' %}bg-success{% else %}bg-warning{% endif %}">
+                                    {{ detection.status }}
+                                </span>
+                            </td>
+                            <td>
+                                <button class="btn btn-sm btn-outline-primary">
+                                    <i class="fas fa-eye"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4">
+                                <div class="text-muted">
+                                    <i class="fas fa-info-circle me-2"></i>
+                                    No recent detections
+                                </div>
+                            </td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+    <!-- Right Column -->
+    <div class="col-md-4">
+        <!-- Quick Actions -->
+        <div class="saas-card p-4 mb-4">
+            <h5 class="mb-4">Quick Actions</h5>
+            <div class="d-grid gap-3">
+                <a href="/add_face" class="btn btn-primary">
+                    <i class="fas fa-user-plus me-2"></i>Add New Face
+                </a>
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#startDetectionModal">
+                    <i class="fas fa-play me-2"></i>Start Detection
+                </button>
+                <a href="/settings" class="btn btn-outline-primary">
+                    <i class="fas fa-cog me-2"></i>System Settings
+                </a>
+            </div>
+        </div>
+
+        <!-- System Status -->
+        <div class="saas-card p-4 mb-4">
+            <h5 class="mb-4">System Status</h5>
+            <div class="mb-3">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>CPU Usage</span>
+                    <span class="text-muted">45%</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar bg-success" role="progressbar" style="width: 45%"></div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Memory Usage</span>
+                    <span class="text-muted">62%</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar bg-warning" role="progressbar" style="width: 62%"></div>
+                </div>
+            </div>
+            <div class="mb-3">
+                <div class="d-flex justify-content-between mb-2">
+                    <span>Storage</span>
+                    <span class="text-muted">78%</span>
+                </div>
+                <div class="progress">
+                    <div class="progress-bar bg-danger" role="progressbar" style="width: 78%"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Alerts -->
+        <div class="saas-card p-4">
+            <h5 class="mb-4">Recent Alerts</h5>
+            <div class="alert alert-warning mb-3">
+                <div class="d-flex">
+                    <i class="fas fa-exclamation-triangle me-2"></i>
+                    <div>
+                        <strong>Storage Warning</strong>
+                        <p class="mb-0 small">Storage usage is above 75%</p>
+                    </div>
+                </div>
+            </div>
+            <div class="alert alert-info mb-3">
+                <div class="d-flex">
+                    <i class="fas fa-info-circle me-2"></i>
+                    <div>
+                        <strong>System Update</strong>
+                        <p class="mb-0 small">New version available (v2.1.0)</p>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-{% endblock %} 
+
+<!-- Start Detection Modal -->
+<div class="modal fade" id="startDetectionModal" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Start Face Detection</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>This will start face detection on all your active cameras. Are you sure?</p>
+                <form method="post" action="/api/detection/start_detection/">
+                    {% csrf_token %}
+                    <div class="mb-3">
+                        <label class="form-label">Select Cameras</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="all" id="allCameras" checked>
+                            <label class="form-check-label" for="allCameras">
+                                All Cameras
+                            </label>
+                        </div>
+                        {% for camera in cameras %}
+                        <div class="form-check">
+                            <input class="form-check-input" type="checkbox" value="{{ camera.id }}" name="cameras">
+                            <label class="form-check-label" for="camera{{ camera.id }}">
+                                {{ camera.name }}
+                            </label>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                <button type="submit" class="btn btn-primary">
+                    <i class="fas fa-play me-2"></i>Start Detection
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% block extra_js %}
+<script>
+    // Handle "All Cameras" checkbox
+    document.getElementById('allCameras').addEventListener('change', function() {
+        const cameraCheckboxes = document.querySelectorAll('input[name="cameras"]');
+        cameraCheckboxes.forEach(checkbox => {
+            checkbox.checked = this.checked;
+            checkbox.disabled = this.checked;
+        });
+    });
+
+    // Initialize tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+</script>
+{% endblock %}
+{% endblock %}
