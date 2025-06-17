@@ -1,43 +1,194 @@
 {% extends 'base.html' %}
+
+{% block title %}Sign Up | FaceSecure{% endblock %}
+
+{% block header_title %}Create Your Account{% endblock %}
+
+{% block header_subtitle %}Join FaceSecure and transform your security infrastructure{% endblock %}
+
 {% block content %}
 <div class="row justify-content-center">
     <div class="col-md-6">
-        <div class="card shadow-sm mt-5">
-            <div class="card-body">
-                <h2 class="mb-4 text-center">Create Your Account</h2>
-                <form method="post">
-                    {% csrf_token %}
-                    <div class="mb-3">
-                        <label for="id_email" class="form-label">Email</label>
-                        <input type="email" name="email" class="form-control" id="id_email" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="id_username" class="form-label">Username</label>
-                        <input type="text" name="username" class="form-control" id="id_username" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="id_password1" class="form-label">Password</label>
-                        <input type="password" name="password1" class="form-control" id="id_password1" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="id_password2" class="form-label">Confirm Password</label>
-                        <input type="password" name="password2" class="form-control" id="id_password2" required>
-                    </div>
-                    <div class="mb-3">
-                        <label for="id_phone" class="form-label">Phone Number</label>
-                        <input type="text" name="phone_number" class="form-control" id="id_phone">
-                    </div>
-                    <div class="mb-3">
-                        <label for="id_company" class="form-label">Company Name</label>
-                        <input type="text" name="company_name" class="form-control" id="id_company">
-                    </div>
-                    <button type="submit" class="btn btn-success w-100">Sign Up</button>
-                </form>
-                <div class="text-center mt-3">
-                    <span>Already have an account?</span> <a href="/login/">Login</a>
+        <div class="saas-card p-4 p-md-5">
+            <div class="text-center mb-4">
+                <div class="feature-icon mb-3">
+                    <i class="fas fa-user-plus"></i>
                 </div>
+                <h4 class="fw-bold">Create Account</h4>
+                <p class="text-muted">Fill in your details to get started</p>
+            </div>
+
+            <form method="post" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="username" class="form-label fw-bold">Username</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="fas fa-user text-muted"></i>
+                            </span>
+                            <input type="text" class="form-control border-start-0" id="username" name="username" 
+                                   placeholder="Choose a username" required>
+                        </div>
+                        <div class="form-text">This will be your unique identifier</div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <label for="email" class="form-label fw-bold">Email Address</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="fas fa-envelope text-muted"></i>
+                            </span>
+                            <input type="email" class="form-control border-start-0" id="email" name="email" 
+                                   placeholder="Enter your email" required>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                        <label for="password1" class="form-label fw-bold">Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="fas fa-lock text-muted"></i>
+                            </span>
+                            <input type="password" class="form-control border-start-0" id="password1" name="password1" 
+                                   placeholder="Create a password" required>
+                            <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePassword1">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                        <div class="password-requirements mt-2">
+                            <small class="text-muted">Password must contain:</small>
+                            <ul class="list-unstyled small text-muted">
+                                <li id="length"><i class="fas fa-times me-1"></i>At least 8 characters</li>
+                                <li id="uppercase"><i class="fas fa-times me-1"></i>One uppercase letter</li>
+                                <li id="lowercase"><i class="fas fa-times me-1"></i>One lowercase letter</li>
+                                <li id="number"><i class="fas fa-times me-1"></i>One number</li>
+                                <li id="special"><i class="fas fa-times me-1"></i>One special character</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6 mb-4">
+                        <label for="password2" class="form-label fw-bold">Confirm Password</label>
+                        <div class="input-group">
+                            <span class="input-group-text bg-light border-end-0">
+                                <i class="fas fa-lock text-muted"></i>
+                            </span>
+                            <input type="password" class="form-control border-start-0" id="password2" name="password2" 
+                                   placeholder="Confirm your password" required>
+                            <button class="btn btn-outline-secondary border-start-0" type="button" id="togglePassword2">
+                                <i class="fas fa-eye"></i>
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mb-4">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="terms" required>
+                        <label class="form-check-label text-muted" for="terms">
+                            I agree to the <a href="#" class="text-decoration-none">Terms of Service</a> and 
+                            <a href="#" class="text-decoration-none">Privacy Policy</a>
+                        </label>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn btn-primary w-100 py-2 mb-4">
+                    <i class="fas fa-user-plus me-2"></i>Create Account
+                </button>
+
+                <div class="text-center mb-4">
+                    <span class="text-muted">Or sign up with</span>
+                </div>
+
+                <div class="d-grid gap-2">
+                    <button type="button" class="btn btn-outline-secondary">
+                        <i class="fab fa-google me-2"></i>Google
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary">
+                        <i class="fab fa-microsoft me-2"></i>Microsoft
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center mt-4">
+                <p class="text-muted mb-0">Already have an account? 
+                    <a href="/login" class="text-decoration-none fw-bold">Sign in</a>
+                </p>
             </div>
         </div>
     </div>
 </div>
-{% endblock %} 
+
+{% block extra_js %}
+<script>
+    // Toggle password visibility
+    function togglePasswordVisibility(inputId, buttonId) {
+        const button = document.getElementById(buttonId);
+        const input = document.getElementById(inputId);
+        
+        button.addEventListener('click', function() {
+            const icon = this.querySelector('i');
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.classList.remove('fa-eye');
+                icon.classList.add('fa-eye-slash');
+            } else {
+                input.type = 'password';
+                icon.classList.remove('fa-eye-slash');
+                icon.classList.add('fa-eye');
+            }
+        });
+    }
+
+    togglePasswordVisibility('password1', 'togglePassword1');
+    togglePasswordVisibility('password2', 'togglePassword2');
+
+    // Password validation
+    const password = document.getElementById('password1');
+    const requirements = {
+        length: /.{8,}/,
+        uppercase: /[A-Z]/,
+        lowercase: /[a-z]/,
+        number: /[0-9]/,
+        special: /[!@#$%^&*(),.?":{}|<>]/
+    };
+
+    password.addEventListener('input', function() {
+        const value = this.value;
+        for (const requirement in requirements) {
+            const element = document.getElementById(requirement);
+            const icon = element.querySelector('i');
+            if (requirements[requirement].test(value)) {
+                element.classList.add('text-success');
+                element.classList.remove('text-muted');
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-check');
+            } else {
+                element.classList.remove('text-success');
+                element.classList.add('text-muted');
+                icon.classList.remove('fa-check');
+                icon.classList.add('fa-times');
+            }
+        }
+    });
+
+    // Form validation
+    (function() {
+        'use strict';
+        const forms = document.querySelectorAll('.needs-validation');
+        Array.from(forms).forEach(form => {
+            form.addEventListener('submit', event => {
+                if (!form.checkValidity()) {
+                    event.preventDefault();
+                    event.stopPropagation();
+                }
+                form.classList.add('was-validated');
+            }, false);
+        });
+    })();
+</script>
+{% endblock %}
+{% endblock %}
