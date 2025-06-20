@@ -16,7 +16,7 @@ FaceSecure is a Django-based SaaS application that uses IP cameras and face reco
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/FaceSecure.git
+git clone https://github.com/ohnohimanshu/FaceSecure.git
 cd FaceSecure
 ```
 
