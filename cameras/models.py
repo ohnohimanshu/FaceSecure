@@ -8,6 +8,7 @@ class Camera(models.Model):
     username = models.CharField(max_length=100, blank=True, null=True)
     password = models.CharField(max_length=100, blank=True, null=True)
     is_active = models.BooleanField(default=True)
+    face_detection_enabled = models.BooleanField(default=True, help_text="Enable or disable face detection and recording for this camera.")
     user = models.ForeignKey(settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name='cameras')
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)

@@ -1,4 +1,5 @@
 {% extends 'base.html' %}
+<<<<<<< HEAD
 
 {% block title %}Dashboard | FaceSecure{% endblock %}
 
@@ -7,6 +8,33 @@
 {% block header_subtitle %}Monitor your security system and manage access control{% endblock %}
 
 {% block content %}
+=======
+<<<<<<< HEAD
+{% block content %}
+<div class="row mt-4">
+    <div class="col-md-12 text-center">
+        <h2 class="fw-bold">Welcome, {{ user.username }}!</h2>
+        <p class="lead">Manage your cameras, faces, and start real-time detection below.</p>
+    </div>
+</div>
+
+<div class="row justify-content-center mt-4">
+    <div class="col-md-3 mb-3">
+        <div class="card text-center shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title">Cameras</h5>
+                <p class="display-6">{{ cameras|length }}</p>
+                <a href="/api/cameras/" class="btn btn-outline-primary btn-sm">Manage Cameras</a>
+=======
+
+{% block title %}Dashboard | FaceSecure{% endblock %}
+
+{% block header_title %}Welcome back, {{ user.username }}!{% endblock %}
+
+{% block header_subtitle %}Monitor your security system and manage access control{% endblock %}
+
+{% block content %}
+>>>>>>> 91797d4 (add new features)
 <!-- Quick Stats -->
 <div class="row g-4 mb-4">
     <div class="col-md-3">
@@ -22,6 +50,10 @@
             </div>
             <div class="mt-3">
                 <span class="badge bg-success">All Online</span>
+<<<<<<< HEAD
+=======
+>>>>>>> f35a53a (add new features)
+>>>>>>> 91797d4 (add new features)
             </div>
         </div>
     </div>
@@ -97,6 +129,13 @@
                         <div class="position-absolute top-0 end-0 m-2">
                             <span class="badge bg-success">Live</span>
                         </div>
+<<<<<<< HEAD
+=======
+                        <div class="mt-2">
+                            <a href="/cameras/edit/{{ camera.id }}/" class="btn btn-sm btn-outline-secondary">Edit</a>
+                            <a href="/cameras/delete/{{ camera.id }}/" class="btn btn-sm btn-outline-danger">Delete</a>
+                        </div>
+>>>>>>> 91797d4 (add new features)
                     </div>
                 </div>
                 {% endfor %}
@@ -246,6 +285,12 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+{% endblock %} 
+=======
+>>>>>>> 91797d4 (add new features)
 
 <!-- Start Detection Modal -->
 <div class="modal fade" id="startDetectionModal" tabindex="-1">
@@ -307,3 +352,7 @@
 </script>
 {% endblock %}
 {% endblock %}
+<<<<<<< HEAD
+=======
+>>>>>>> f35a53a (add new features)
+>>>>>>> 91797d4 (add new features)

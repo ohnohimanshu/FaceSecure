@@ -1,0 +1,58 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Your Recordings</h2>
+<form method="get" class="mb-3 d-flex gap-2 align-items-end">
+  <div>
+    <label for="camera">Camera:</label>
+    <select name="camera" id="camera" class="form-select">
+      <option value="">All</option>
+      {% for cam in cameras %}
+        <option value="{{ cam.id }}" {% ifselected_camera == cam.id|stringformat:'s' %}selected{% endif %}>{{ cam.name }}</option>
+      {% endfor %}
+    </select>
+  </div>
+  <div>
+    <label for="date">Date:</label>
+    <input type="date" name="date" id="date" class="form-control" value="{{ selected_date }}">
+  </div>
+  <button type="submit" class="btn btn-outline-primary">Filter</button>
+  {% if selected_camera or selected_date %}
+    <a href="/detection/recordings/" class="btn btn-link">Clear</a>
+  {% endif %}
+</form>
+{% if recordings %}
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Camera</th>
+        <th>Start Time</th>
+        <th>End Time</th>
+        <th>Playback</th>
+        <th>Download</th>
+        <th>Delete</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for rec in recordings %}
+      <tr>
+        <td>{{ rec.camera.name }}</td>
+        <td>{{ rec.start_time }}</td>
+        <td>{{ rec.end_time }}</td>
+        <td>
+          <video width="320" height="240" controls>
+            <source src="{{ rec.file.url }}" type="video/mp4">
+            Your browser does not support the video tag.
+          </video>
+        </td>
+        <td><a href="{{ rec.file.url }}" download>Download</a></td>
+        <td>
+          <a href="/detection/recordings/delete/{{ rec.id }}/" class="btn btn-sm btn-danger">Delete</a>
+        </td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+{% else %}
+  <p>No recordings found.</p>
+{% endif %}
+{% endblock %} 

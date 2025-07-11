@@ -40,6 +40,26 @@ def live_feed(request, camera_id):
     return StreamingHttpResponse(generate(cam.ip_address),
                                  content_type='multipart/x-mixed-replace; boundary=frame')
 
+@login_required
+def edit_camera(request, camera_id):
+    camera = Camera.objects.get(id=camera_id, user=request.user)
+    if request.method == 'POST':
+        form = CameraForm(request.POST, instance=camera)
+        if form.is_valid():
+            form.save()
+            return redirect('dashboard')
+    else:
+        form = CameraForm(instance=camera)
+    return render(request, 'edit_camera.html', {'form': form, 'camera': camera})
+
+@login_required
+def delete_camera(request, camera_id):
+    camera = Camera.objects.get(id=camera_id, user=request.user)
+    if request.method == 'POST':
+        camera.delete()
+        return redirect('dashboard')
+    return render(request, 'delete_camera.html', {'camera': camera})
+
 class CameraViewSet(viewsets.ModelViewSet):
     serializer_class = CameraSerializer
     permission_classes = [permissions.IsAuthenticated]

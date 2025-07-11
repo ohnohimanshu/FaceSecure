@@ -1,4 +1,145 @@
 {% extends 'base.html' %}
+<<<<<<< HEAD
+
+{% block title %}Add Face | FaceSecure{% endblock %}
+
+{% block header_title %}Register New Face{% endblock %}
+
+{% block header_subtitle %}Add authorized personnel to your facial recognition system{% endblock %}
+
+=======
+<<<<<<< HEAD
+>>>>>>> 91797d4 (add new features)
+{% block content %}
+<div class="row justify-content-center">
+    <div class="col-md-8">
+        <div class="saas-card p-4 p-md-5">
+            <div class="text-center mb-4">
+                <div class="feature-icon mb-3">
+                    <i class="fas fa-user-plus"></i>
+                </div>
+                <h4 class="fw-bold">Face Registration</h4>
+                <p class="text-muted">Upload a clear photo of the person's face</p>
+            </div>
+
+            <form method="post" enctype="multipart/form-data" class="needs-validation" novalidate>
+                {% csrf_token %}
+                <div class="row">
+                    <!-- Left Column - Image Upload -->
+                    <div class="col-md-5">
+                        <div class="mb-4">
+                            <label for="image" class="form-label fw-bold">Face Image</label>
+                            <div class="image-upload-container">
+                                <div class="image-preview mb-3" id="imagePreview">
+                                    <div class="image-preview-placeholder">
+                                        <i class="fas fa-user-circle fa-4x text-muted"></i>
+                                        <p class="mt-2 mb-0 text-muted">No image selected</p>
+                                    </div>
+                                </div>
+                                <div class="input-group">
+                                    <input type="file" class="form-control" id="image" name="image" 
+                                           accept="image/*" required onchange="previewImage(this)">
+                                    <button class="btn btn-outline-secondary" type="button" onclick="document.getElementById('image').click()">
+                                        <i class="fas fa-upload"></i>
+                                    </button>
+                                </div>
+                                <div class="form-text">Supported formats: JPG, PNG, JPEG (Max 5MB)</div>
+                            </div>
+                        </div>
+
+                        <div class="alert alert-info">
+                            <div class="d-flex">
+                                <i class="fas fa-info-circle me-2"></i>
+                                <div>
+                                    <strong>Tips for best results:</strong>
+                                    <ul class="mb-0 small">
+                                        <li>Use a clear, well-lit photo</li>
+                                        <li>Face should be clearly visible</li>
+                                        <li>Avoid sunglasses or masks</li>
+                                        <li>Use a neutral expression</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Right Column - Form Fields -->
+                    <div class="col-md-7">
+                        <div class="mb-4">
+                            <label for="name" class="form-label fw-bold">Full Name</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="fas fa-user text-muted"></i>
+                                </span>
+                                <input type="text" class="form-control border-start-0" id="name" name="name" 
+                                       placeholder="Enter full name" required>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="role" class="form-label fw-bold">Role/Department</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="fas fa-briefcase text-muted"></i>
+                                </span>
+                                <select class="form-select border-start-0" id="role" name="role">
+                                    <option value="">Select role</option>
+                                    <option value="employee">Employee</option>
+                                    <option value="contractor">Contractor</option>
+                                    <option value="visitor">Visitor</option>
+                                    <option value="admin">Administrator</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="access_level" class="form-label fw-bold">Access Level</label>
+                            <div class="input-group">
+                                <span class="input-group-text bg-light border-end-0">
+                                    <i class="fas fa-shield-alt text-muted"></i>
+                                </span>
+                                <select class="form-select border-start-0" id="access_level" name="access_level">
+                                    <option value="basic">Basic Access</option>
+                                    <option value="standard">Standard Access</option>
+                                    <option value="premium">Premium Access</option>
+                                    <option value="admin">Admin Access</option>
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            <label for="notes" class="form-label fw-bold">Additional Notes</label>
+                            <textarea class="form-control" id="notes" name="notes" rows="3" 
+                                      placeholder="Add any additional information about this person"></textarea>
+                        </div>
+
+                        <div class="mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="notify" name="notify">
+                                <label class="form-check-label" for="notify">
+                                    Send notification email to the person
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-primary">
+                                <i class="fas fa-user-plus me-2"></i>Register Face
+                            </button>
+                            <a href="/dashboard" class="btn btn-outline-secondary">
+                                <i class="fas fa-times me-2"></i>Cancel
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<<<<<<< HEAD
+=======
+{% endblock %} 
+=======
 
 {% block title %}Add Face | FaceSecure{% endblock %}
 
@@ -132,6 +273,7 @@
         </div>
     </div>
 </div>
+>>>>>>> 91797d4 (add new features)
 
 {% block extra_js %}
 <script>
@@ -230,3 +372,7 @@
     }
 </style>
 {% endblock %}
+<<<<<<< HEAD
+=======
+>>>>>>> f35a53a (add new features)
+>>>>>>> 91797d4 (add new features)

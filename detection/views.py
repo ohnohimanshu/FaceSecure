@@ -8,10 +8,12 @@ from rest_framework import viewsets, permissions, filters, status
 from rest_framework.decorators import action
 from rest_framework.response import Response
 from django_filters.rest_framework import DjangoFilterBackend
-from .models import Detection
+from .models import Detection, Recording
 from .serializers import DetectionSerializer, DetectionCreateSerializer
 import threading
 from .utils import process_camera
+from django.utils import timezone
+from django.db.models import Q
 
 @login_required
 def start_streams(request):
@@ -30,6 +32,31 @@ def start_streams(request):
         'faces': faces,
         'recent_detections': recent_detections
     })
+
+@login_required
+def delete_recording(request, recording_id):
+    recording = Recording.objects.get(id=recording_id, user=request.user)
+    if request.method == 'POST':
+        recording.delete()
+        return redirect('recordings_list')
+    return render(request, 'delete_recording.html', {'recording': recording})
+
+@login_required
+def recordings_list(request):
+    recordings = Recording.objects.filter(user=request.user)
+    camera_id = request.GET.get('camera')
+    date = request.GET.get('date')
+    if camera_id:
+        recordings = recordings.filter(camera_id=camera_id)
+    if date:
+        try:
+            date_obj = timezone.datetime.strptime(date, '%Y-%m-%d').date()
+            recordings = recordings.filter(start_time__date=date_obj)
+        except Exception:
+            pass
+    recordings = recordings.order_by('-start_time')
+    cameras = Camera.objects.filter(user=request.user)
+    return render(request, 'recordings_list.html', {'recordings': recordings, 'cameras': cameras, 'selected_camera': camera_id, 'selected_date': date})
 
 class DetectionViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.IsAuthenticated]
